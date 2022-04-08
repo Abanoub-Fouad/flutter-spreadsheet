@@ -10,7 +10,7 @@ import 'package:keyboard_shortcuts/keyboard_shortcuts.dart';
 typedef void MapCallback(Map val);
 typedef void StringCallback(String val);
 
-class SheetRow extends StatefulWidget {
+class Spreadsheet extends StatefulWidget {
 
 
 int rowLength;
@@ -22,7 +22,7 @@ final MapCallback callback;
   List<List<String>> suggestions ;
 TextStyle headTextStyle;
 TextStyle cellTextStyle;
- SheetRow(
+ Spreadsheet(
    {
  
     this.rowLength,
@@ -37,10 +37,10 @@ TextStyle cellTextStyle;
  );
    
   @override
-  State<SheetRow> createState() => _SheetRowState();
+  State<Spreadsheet> createState() => _SpreadsheetState();
 }
 
-class _SheetRowState extends State<SheetRow> {
+class _SpreadsheetState extends State<Spreadsheet> {
   List<FocusNode> focusNodes = new List();
   List<TextEditingController> textEditingControllers = new List();
   List<bool> enableEditList = new List();
@@ -354,18 +354,20 @@ String hint;
                       else{
                       hint=null;
                           //  text
-                                // print('${widget.index} aa ${widget.rowLength} ${(widget.index/widget.rowLength)} ${(widget.index/widget.rowLength).floor()}');
   for(int i=0;i<widget.suggestions.length;i++){
-    if(widget.suggestions[i].toString()=='$text'){
+    
+// print(' ${widget.suggestions[i].toString().toLowerCase()} ${widget.suggestions[i].toString().toLowerCase().contains('$text')} aa ${widget.rowLength} ${(widget.index/widget.rowLength)} ${(widget.index/widget.rowLength).floor()}');
+
+    if(widget.suggestions[i].toString()==text.toString().toLowerCase()){
    hint=null;
 
     }
-    else if(widget.suggestions[i].toString().toLowerCase().contains('$text')){
+    else if(widget.suggestions[i].toString().toLowerCase().contains(text.toString().toLowerCase())){
       hint=widget.suggestions[i];
     }
   }
   widget.callbackkey("${widget.titles[widget.index-(((widget.index/widget.rowLength).floor())*widget.rowLength)]}-${(widget.index/widget.rowLength).floor()}");
-  widget.callbackValue("$text");
+  widget.callbackValue(text);
                       }
                       
                     // });
